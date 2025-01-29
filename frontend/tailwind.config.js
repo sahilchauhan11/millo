@@ -15,5 +15,5 @@ export default {
   		colors: {}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindAnimate],
 }
