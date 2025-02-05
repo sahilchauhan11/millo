@@ -23,7 +23,7 @@ app.get("*",(req,res)=>{
   res.sendFile(path.join(_dirname,"frontend","dist","index.html"))
 })
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: process.env.URL,
     credentials: true,
   };
   
