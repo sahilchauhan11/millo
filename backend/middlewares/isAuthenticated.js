@@ -25,7 +25,7 @@ export function firstcheck(req,res,next){
     try{
     console.log("funccalled")
         const token=req.cookies?.token;
-        console.log(token)
+        console.log(token,"tken")
         if(!token){
             return res.status(401).json({success:false,message:"No token found",validToken:false});
             

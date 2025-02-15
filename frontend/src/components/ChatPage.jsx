@@ -1,120 +1,122 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { setSelectedUser } from '../redux/authSlice'
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
-import { Button } from "@/components/ui/button"
-import Messages from './Messages'
-import { MessageCircleCode } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
-import { setMessages } from '../redux/chatSlice'
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSelectedUser } from '../redux/authSlice';
+import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
+import { Button } from '@/components/ui/button';
+import Messages from './Messages';
+import { MessageCircleCode } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { setMessages } from '../redux/chatSlice';
 
 const ChatPage = () => {
-  const [textmessage, settextmessage] = useState("");
+  const [textmessage, settextmessage] = useState('');
   const dispatch = useDispatch();
-  const [comments, setComments] = useState([]);
-  const { user, suggestedUsers, selectedUser } = useSelector((state) => state.auth)
-  const onlineUsers = useSelector((state) => state.chat.onlineUsers)
-  const { messages } = useSelector((state) => state.chat)
+  const { user, suggestedUsers, selectedUser } = useSelector((state) => state.auth);
+  const onlineUsers = useSelector((state) => state.chat.onlineUsers);
+  const { messages } = useSelector((state) => state.chat);
   const socket = useSelector((state) => state.chat.socket);
 
   const handleSendMessage = async (receiverId) => {
     try {
-      const res = await axios.post(`http://localhost:8000/api/v1/message/send/${receiverId}`, {
-        message: textmessage
-      }, {
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        `http://localhost:8000/api/v1/message/send/${receiverId}`,
+        { message: textmessage },
+        { withCredentials: true }
+      );
       if (res.data.success) {
-        dispatch(setMessages([...messages, res.data?.newMessage]))
-        settextmessage("");
+        dispatch(setMessages([...messages, res.data?.newMessage]));
+        settextmessage('');
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     return () => {
-      dispatch(setSelectedUser(null))
-    }
-  }, [])
+      dispatch(setSelectedUser(null));
+    };
+  }, []);
 
-
-
-
-
-
-
-
-
-  return (<>
-    <div className='flex h-full justify-between w-full bg-white'>
-      <section className='w-[25%] flex flex-col justify-center items-center py-5'>
-        <div className='h-[20%] px-2 w-full flex flex-col justify-center items-start gap-4'>
-          <Avatar className="h-[50px] w-[50px] rounded-full flex items-center justify-center">
-            <AvatarImage className="rounded-full object-cover" src={user?.profilePicture ? user.profilePicture : ""} />
-            <AvatarFallback className="h-full w-full flex items-center justify-center text-2xl">
-              <span class="material-symbols-outlined">
-                person
-              </span>
+  return (
+    <div className='flex h-screen w-full bg-gray-100'>
+      <section className='w-1/4 flex flex-col p-5 bg-white shadow-md border-r'>
+        <div className='flex flex-col items-center pb-5 border-b'>
+          <Avatar className='h-14 w-14 rounded-full'>
+            <AvatarImage src={user?.profilePicture || ''} className='rounded-full object-cover' />
+            <AvatarFallback className='h-full w-full flex items-center justify-center text-xl bg-gray-200'>
+              {user?.username.charAt(0)}
             </AvatarFallback>
           </Avatar>
-          <div className='flex justify-start items-center gap-3 w-full'>
-            <div className='text-xl font-semibold'>
-              {user?.username}
-            </div>
-          </div>
+          <h2 className='mt-3 text-lg font-semibold'>{user?.username}</h2>
         </div>
-        <hr className='w-full h-px my-8 bg-gray-400 border-0 rounded' />
-        <div className='flex w-full flex-col h-[80vh] gap-3 overflow-y-auto scrollbar-hide items-center justify-start'>
-          {
-          suggestedUsers && suggestedUsers.map((sugguser) => {
+        <div className='flex flex-col h-full overflow-y-auto scrollbar-hide mt-3'>
+          {suggestedUsers?.map((sugguser) => {
             const isOnline = onlineUsers?.includes(sugguser?._id);
             return (
-              <div onClick={() => dispatch(setSelectedUser(sugguser))} key={sugguser._id} className='flex items-center w-full justify-center hover:bg-gray-200 rounded-xl cursor-pointer'>
-                <div className='my-3 flex items-center gap-5 w-full'>
-                  {sugguser.profilePicture ? <img src={sugguser.profilePicture} alt={sugguser.username} className='w-10 h-10 rounded-full' /> : <div className='w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center'>
-                    <span className='text-xl font-semibold font-mono'>{sugguser.username.charAt(0)}</span></div>}
-                  <div className='flex flex-col'><h1 className='text-xl font-semibold font-mono'>{sugguser.username}</h1>
-                    <span className={`text-xs font-mono font-semibold ${isOnline ? 'text-green-500' : 'text-red-500'}`}>{isOnline ? 'online' : 'offline'}</span></div>
+              <div
+                key={sugguser._id}
+                onClick={() => dispatch(setSelectedUser(sugguser))}
+                className='flex items-center gap-4 p-3 hover:bg-gray-200 rounded-lg cursor-pointer transition-all'
+              >
+                <Avatar className='h-10 w-10 rounded-full'>
+                  <AvatarImage src={sugguser.profilePicture || ''} className='rounded-full object-cover' />
+                  <AvatarFallback className='bg-gray-300'>{sugguser.username.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className='flex flex-col'>
+                  <h1 className='text-lg font-semibold'>{sugguser.username}</h1>
+                  <span className={`text-xs font-semibold ${isOnline ? 'text-green-500' : 'text-red-500'}`}>
+                    {isOnline ? 'Online' : 'Offline'}
+                  </span>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       </section>
-      <section className='w-[75%] bg-red-500'>
-        {!selectedUser ? <div className='flex flex-col h-full justify-center items-center w-full'>
-          <MessageCircleCode className='w-[30%] h-[30%]' />
-          <h1 className='text-xl font-bold text-gray-800'>Select a user to start chat</h1>
-        </div> : <div className='flex flex-col w-full h-full p-3 rounded-xl bg-white'>
-          <div className='p-3 h-[10%] flex items-center gap-5'>
-            {selectedUser.profilePicture ? <img src={selectedUser.profilePicture} alt={selectedUser.username} className='w-10 h-10 rounded-full' /> : <div className='w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center'>
-              <span className='text-2xl font-semibold font-mono'>{selectedUser.username.charAt(0)}</span></div>}
-            <div className='flex flex-col'><h1 className='text-2xl font-semibold font-mono'>{selectedUser.username}</h1>
-            </div>
-            <Link to={`/profile/${selectedUser?._id}`} className='text-sm text-gray-500'>View Profile</Link>
+      <section className='w-3/4 flex flex-col bg-white shadow-md rounded-lg'>
+        {!selectedUser ? (
+          <div className='flex flex-col h-full justify-center items-center'>
+            <MessageCircleCode className='w-20 h-20 text-gray-400' />
+            <h1 className='text-lg font-bold text-gray-700 mt-3'>Select a user to start chatting</h1>
           </div>
-          <hr className='w-full h-px my-2 bg-gray-400 border-0 rounded' />
-          <div className='flex flex-col w-full h-[90%] bg-slate-600'>
-            <Messages selectedUser={selectedUser} />
-            <div className='flex items-center justify-center w-full h-[10%]'>
-              <input value={textmessage} onChange={(e) => settextmessage(e.target.value)} placeholder='type your message here...' type="text" className='w-full h-[90%] bg-pink-600 p-3 focus:outline-none border-none' />
-              <Button onClick={() => {
-                console.log("sending message");
-                console.log(selectedUser?._id);
-                handleSendMessage(selectedUser?._id);
-              }} className='bg-blue-500 rounded-full px-4 py-2 w-fit'>
+        ) : (
+          <div className='flex flex-col w-full h-full'>
+            <div className='flex items-center gap-4 p-4 border-b'>
+              <Avatar className='h-12 w-12 rounded-full'>
+                <AvatarImage src={selectedUser.profilePicture || ''} className='rounded-full object-cover' />
+                <AvatarFallback className='bg-gray-300'>{selectedUser.username.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <div className='flex flex-col'>
+                <h1 className='text-xl font-semibold'>{selectedUser.username}</h1>
+                <Link to={`/profile/${selectedUser?._id}`} className='text-sm text-blue-500 hover:underline'>
+                  View Profile
+                </Link>
+              </div>
+            </div>
+            <div className='flex flex-col flex-grow overflow-y-auto bg-gray-50 p-4'>
+              <Messages selectedUser={selectedUser} />
+            </div>
+            <div className='flex items-center p-3 border-t bg-gray-100'>
+              <input
+                value={textmessage}
+                onChange={(e) => settextmessage(e.target.value)}
+                placeholder='Type your message...'
+                className='flex-grow px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-400'
+              />
+              <Button
+                onClick={() => handleSendMessage(selectedUser?._id)}
+                className='ml-3 px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all'
+              >
                 Send
               </Button>
             </div>
           </div>
-        </div>}
+        )}
       </section>
     </div>
-  </>
-  )
-}
+  );
+};
 
 export default ChatPage;

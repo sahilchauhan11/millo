@@ -6,11 +6,11 @@ import useGetSuggestedUsers from '../hooks/useGetSuggestedUsers.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSocket } from '@/redux/socketSlice.js'
 import { io } from 'socket.io-client'
-import useTokenExpired from '@/hooks/usetokenExpired.jsx'
+
 const Home = () => {
   useGetAllPost();
 useGetSuggestedUsers();
-useTokenExpired();
+
 
   return (
     <div className='flex h-full w-full justify-center overflow-hidden'>

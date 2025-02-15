@@ -44,9 +44,10 @@ const Login = () => {
                     "Content-Type":"application/json"
                 },withCredentials:true
             })  
-            // console.log(response);
+            console.log(response);
             if(response.data.success){
-            //    console.log(response.data)
+                console.log("login output--->")
+               console.log(response.data)
                 dispatch(setUser(response.data.user));
                 toast.success(response.data.message);
                 navigate ("/",{replace:true});

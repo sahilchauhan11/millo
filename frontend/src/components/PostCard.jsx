@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Heart } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { setSelectedPost } from '@/redux/postSlice.js';
@@ -160,7 +160,7 @@ const PostCard = ({ post }) => {
   }
 
   return (
-    <div className='border-2 h-[80vh] w-[70%] border-gray-300 rounded-xl p-4 m-2 relative  '
+    <div className='border-2 h-[70vh] w-[50%] border-gray-300 rounded-xl p-4 m-2 relative flex flex-col items-center '
     >
       <div className='flex h-[10%] justify-between items-center '>
         <div className='flex  justify-center items-center gap-2'>
@@ -180,7 +180,7 @@ const PostCard = ({ post }) => {
         </button></div> : ""}
       </div>
 
-      <div className='w-full h-[60%] flex justify-center items-center py-2'>
+      <div className='w-[90%] h-[60%] flex justify-center items-center py-2'>
         <img  src={post?.image} className='aspect-square  object-cover w-[70%]' alt="img" />
       </div>
       <div className='flex flex-col h-[20%] justify-center items-start  px-4 py-2'>

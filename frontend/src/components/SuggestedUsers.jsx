@@ -7,40 +7,34 @@ const SuggestedUsers = () => {
     const { suggestedUsers } = useSelector(state => state.auth);
     console.log("got", suggestedUsers);
     return (
-        <div className='flex flex-col my-10'>
-            <div className='flex items-center justify-between'>
-                <h1 className='text-2xl font-bold'>Suggested Users</h1>
-                <Link to="/suggested-users">View All</Link>
+        <div className='flex flex-col my-10 px-4 w-full max-w-lg mx-auto'>
+            <div className='flex items-center justify-between mb-4'>
+                <h1 className='text-xl font-semibold text-gray-900'>Suggested Users</h1>
+                <Link to="/suggested-users" className='text-blue-600 hover:underline'>View All</Link>
             </div>
             {suggestedUsers?.map(user => {
                 return (
-                    <div className='h-full cursor-pointer bg-red-500 scrollbar-hide py-4 w-full'>
-                        <div className='flex items-center w-full justify-evenly'>
-                            <div className='flex h-[60px] items-center justify-between p-4 bg-rose-600'>
-                            <div className='w-[20%] flex justify-center items-center'>
+                    <div className='w-full flex items-center bg-white shadow-md rounded-lg p-3 mb-3 hover:bg-gray-100 transition duration-200'>
+                        <div className='flex items-center w-full'>
+                            <div className='w-14 h-14 flex justify-center items-center'>
                                 <Link to={`/profile/${user._id}`}>
                                     <Avatar>
-                                        <AvatarImage src={user.owner?.profilePicture?user.owner.profilePicture:""} />
-                                        <AvatarFallback>
+                                        <AvatarImage src={user.owner?.profilePicture ? user.owner.profilePicture : ""} />
+                                        <AvatarFallback className='bg-gray-300 text-gray-600'>
                                             CN
                                         </AvatarFallback>
                                     </Avatar>
                                 </Link>
                             </div>
-                            <div className='flex flex-col h-full w-[70%] bg-white items-center justify-center'>
-                                <p className='text-sm font-bold'>{user.username}</p>
-                               
-                                
+                            <div className='flex flex-col ml-3 flex-1'>
+                                <p className='text-sm font-medium text-gray-900'>{user.username}</p>
                             </div>
-                            </div>
-                            <button className='bg-blue-500 h-[60px] w-[30%] text-white px-2 text-sm rounded-md'>Follow</button>
+                            <button className='bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-lg text-sm transition duration-200'>Follow</button>
                         </div>
                     </div>
                 )
             })}
-
         </div>
-
     )
 }
 

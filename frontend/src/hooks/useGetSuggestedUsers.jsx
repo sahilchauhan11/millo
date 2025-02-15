@@ -13,7 +13,7 @@ const useGetSuggestedUsers = () => {
             try {
                 console.log("fetchSuggestedUsers");
                 const response = await axios.get("http://localhost:8000/api/v1/user/suggestions", { withCredentials: true });
-               console.log(response)
+               console.log("suggested user",response)
                 
                 if (response.data.success) {
              dispatch(setSuggestedUsers(response.data.users));

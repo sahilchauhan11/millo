@@ -18,12 +18,10 @@ mongoDbConnection();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(_dirname,"/frontend/dist")))
-app.get("*",(req,res)=>{
-  res.sendFile(path.join(_dirname,"frontend","dist","index.html"))
-})
+
+
 const corsOptions = {
-    origin: process.env.URL,
+    origin:  'http://localhost:5173',
     credentials: true,
   };
   
@@ -32,7 +30,10 @@ app.use(cors(corsOptions));
 app.use('/api/v1/user',userRoutes);
 app.use('/api/v1/post',postRoutes);
 app.use('/api/v1/message',messageRoutes);
-
+app.use(express.static(path.join(_dirname,"/frontend/dist")));
+app.get("*",(req,res)=>{
+  res.sendFile(path.resolve(_dirname,"frontend","dist","index.html"))
+})
 server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

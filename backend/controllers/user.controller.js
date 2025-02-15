@@ -23,6 +23,7 @@ export async function register(req, res) {
                 password = hash;
                 user = await User.create({ username, email, password:hash });
                 const token = jwt.sign({ userId: user._id, email }, process.env.JWT_SECRET, { expiresIn: '1d' }); 
+                console.log(user);
                 return res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict', maxAge: 30*24*60*60*1000 }).status(201).json({ message: "User created successfully",user,success:true });
             })
         })
@@ -46,7 +47,8 @@ export async function login(req, res) {
             const token = jwt.sign({ userId: user._id, email }, process.env.JWT_SECRET, { expiresIn: '1d' }); 
             await user.populate('posts');
             
-           console.log(token)
+           console.log(token);
+           console.log(user);
             return res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict', maxAge: 30*24*60*60*1000 })
                       .json({ message: "Login successful", user ,success:true});
                      
