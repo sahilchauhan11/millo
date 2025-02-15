@@ -33,7 +33,7 @@ const [load, setload] = useState(false)
       formData.append("caption",caption);
       formData.append("image",file);
      
-        const response = await axios.post("http://localhost:8000/api/v1/post/addpost", formData, {
+        const response = await axios.post("https://millo-ydtw.onrender.com/api/v1/post/addpost", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           },

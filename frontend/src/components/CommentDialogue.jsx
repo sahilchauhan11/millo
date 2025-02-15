@@ -33,7 +33,7 @@ const CommentDialogue = ({ open, onOpenChange }) => {
 
   const sendMessageHandler = async () => {
 
-    let res = await axios.post(`http://localhost:8000/api/v1/post/${selectedPost._id}/comment`, { comment: text }, {
+    let res = await axios.post(`https://millo-ydtw.onrender.com/api/v1/post/${selectedPost._id}/comment`, { comment: text }, {
         withCredentials: true, headers: {
           "Content-Type": "application/json"
         }

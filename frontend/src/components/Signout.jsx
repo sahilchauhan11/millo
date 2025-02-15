@@ -15,7 +15,7 @@ const Signout = () => {
     const handleLogout = async() => {
         
         try{
-            let response = await axios.get("http://localhost:8000/api/v1/user/logout",{
+            let response = await axios.get("https://millo-ydtw.onrender.com/api/v1/user/logout",{
                 withCredentials:true
             })
             console.log(response)

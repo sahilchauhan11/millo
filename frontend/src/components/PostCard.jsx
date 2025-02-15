@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Heart } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { setSelectedPost } from '@/redux/postSlice.js';
@@ -47,7 +47,7 @@ const PostCard = ({ post }) => {
   const CommentHandleSubmit = async (e) => {
     e.preventDefault();
     try{
-    let res = await axios.post(`http://localhost:8000/api/v1/post/${post?._id}/comment`, { comment: value }, {
+    let res = await axios.post(`https://millo-ydtw.onrender.com/api/v1/post/${post?._id}/comment`, { comment: value }, {
       withCredentials: true, headers: {
         "Content-Type": "application/json"
       }
@@ -79,7 +79,7 @@ const PostCard = ({ post }) => {
   const postDeletehandle = async (e) => {
     try {
       console.log(post?._id);
-      let res = await axios.delete(`http://localhost:8000/api/v1/post/delete/${post?._id}`, { withCredentials: true });
+      let res = await axios.delete(`https://millo-ydtw.onrender.com/api/v1/post/delete/${post?._id}`, { withCredentials: true });
 
 
       if (res.data.success) {
@@ -105,7 +105,7 @@ const PostCard = ({ post }) => {
   }
   const bookmarkHandeler=async()=>{
     try {
-      const  res = await axios.get(`http://localhost:8000/api/v1/post/bookmark/${post?._id}`, { withCredentials: true });
+      const  res = await axios.get(`https://millo-ydtw.onrender.com/api/v1/post/bookmark/${post?._id}`, { withCredentials: true });
       if(res.data.success){
         toast.success(res.data.message)
       }
@@ -119,7 +119,7 @@ const PostCard = ({ post }) => {
       console.log(post?._id);
       let res;
       if (!like) {
-        res = await axios.get(`http://localhost:8000/api/v1/post/${post?._id}/like`, { withCredentials: true });
+        res = await axios.get(`https://millo-ydtw.onrender.com/api/v1/post/${post?._id}/like`, { withCredentials: true });
         console.log(res);
         setPostLikeCount(postLikeCount + 1);
         const updatedPosts = posts.map((p) => {
@@ -132,7 +132,7 @@ const PostCard = ({ post }) => {
 
       }
       else {
-        res = await axios.get(`http://localhost:8000/api/v1/post/${post?._id}/dislike`, { withCredentials: true });
+        res = await axios.get(`https://millo-ydtw.onrender.com/api/v1/post/${post?._id}/dislike`, { withCredentials: true });
         setPostLikeCount(postLikeCount - 1);
         const updatedPosts = posts.map((p) => {
           if (p?._id === post?._id) {

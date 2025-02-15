@@ -10,7 +10,7 @@ const {selectedUser}=useSelector((state)=>state.auth)
     useEffect(() => {
         const fetchAllMessages = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/v1/message/all/${selectedUser?._id}`, { withCredentials: true });
+                const response = await axios.get(`https://millo-ydtw.onrender.com/api/v1/message/all/${selectedUser?._id}`, { withCredentials: true });
 
                 
                 if (response.data.success) {

@@ -48,7 +48,7 @@ const Signup = () => {
         // Add your form submission logic here
         try {
             
-            const response=await axios.post("http://localhost:8000/api/v1/user/register",input,{
+            const response=await axios.post("https://millo-ydtw.onrender.com/api/v1/user/register",input,{
                 headers:{
                     "Content-Type":"application/json"
                 },withCredentials:true
