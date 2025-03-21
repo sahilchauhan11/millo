@@ -17,7 +17,7 @@ useGetSuggestedUsers();
     <div className='w-[60%] h-full'>
       <Feed/>
     </div>
-    <div className='w-[40%] h-full'>
+    <div className='w-fit px-2 h-full'>
         <RighSideBar/>
       </div>
     

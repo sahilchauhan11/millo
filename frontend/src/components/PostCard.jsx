@@ -181,7 +181,7 @@ const PostCard = ({ post }) => {
       </div>
 
       <div className='w-[90%] h-[60%] flex justify-center items-center py-2'>
-        <img  src={post?.image} className='aspect-square  object-cover w-[70%]' alt="img" />
+        <img  src={post?.image} className='h-full  object-fit w-[70%]' alt="img" />
       </div>
       <div className='flex flex-col h-[20%] justify-center items-start  px-4 py-2'>
         <div className=' flex justify-between items-center gap-2 w-full my-2 '>

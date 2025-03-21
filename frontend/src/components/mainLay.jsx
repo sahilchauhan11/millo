@@ -10,11 +10,11 @@ const MainLayout = () => {
   
   return (
     <div className='flex  h-screen w-[100vw] '>
-      <div className='w-[20%] h-full'>
+      <div className='w-fit h-full'>
       <Leftbar/>
       </div>
       
-      <div className='w-[80%] h-full'>
+      <div className=' h-full'>
         <Outlet/>
       </div>
     
