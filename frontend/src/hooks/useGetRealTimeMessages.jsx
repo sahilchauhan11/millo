@@ -10,14 +10,14 @@ const useGetRealTimeMessages = () => {
     const {socket}=useSelector((state)=>state.socketio)
     const{messages}=useSelector((state)=>state.chat)
     useEffect(() => {
-        socket?.on("NewMessage",(message)=>{ 
+        socket?.on("newMessage",(message)=>{ 
             console.log("socket called")
             dispatch(setMessages([...messages,message]))
         })
         return ()=>{
             socket?.off("newMessage")
         }
-    }, [messages,setMessages]);
+    }, [dispatch,socket]);
 };
 
 export default useGetRealTimeMessages;

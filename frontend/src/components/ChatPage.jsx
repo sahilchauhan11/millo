@@ -7,7 +7,7 @@ import Messages from './Messages';
 import { MessageCircleCode } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { setMessages } from '../redux/chatSlice';
+import { setMessages, setOnlineUsers } from '../redux/chatSlice';
 
 const ChatPage = () => {
   const [textmessage, settextmessage] = useState('');
@@ -34,10 +34,19 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
+    if (socket) {
+      socket.on('getOnlineUsers', (onlineUsersList) => {
+        dispatch(setOnlineUsers(onlineUsersList));
+      });
+    }
+
     return () => {
+      if (socket) {
+        socket.off('getOnlineUsers');
+      }
       dispatch(setSelectedUser(null));
     };
-  }, []);
+  }, [socket]);
 
   return (
     <div className='flex h-screen w-full bg-gray-100'>
@@ -45,7 +54,7 @@ const ChatPage = () => {
         <div className='flex flex-col items-center pb-5 border-b'>
           <Avatar className='h-14 w-14 rounded-full'>
             <AvatarImage src={user?.profilePicture || ''} className='rounded-full object-cover' />
-            <AvatarFallback className='h-full w-full flex items-center justify-center text-xl bg-gray-200'>
+            <AvatarFallback className='h-full w-full flex items-center justify-center text-xl bg-gray-200 p-4'>
               {user?.username.charAt(0)}
             </AvatarFallback>
           </Avatar>

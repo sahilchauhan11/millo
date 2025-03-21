@@ -38,7 +38,7 @@ export async function sendMessage(req,res){
         const receiverSocket=getReceiverSocket(receiverId);
         if (receiverSocket){
             console.log("sending message--->",message,"-to-",receiverSocket)
-            io.to(receiverSocket).emit('NewMessage',newMessage);
+            io.to(receiverSocket).emit('newMessage',newMessage);
         }
         
            return res.status(200).json({message:newMessage,success:true,newMessage});
