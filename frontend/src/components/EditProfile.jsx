@@ -14,9 +14,9 @@ const EditProfile = () => {
   const [profile, setProfile] = useState(user)
   const [input, setInput] = useState({
 
-    bio: user.bio,
-    gender: user.gender,
-    profilePicture: user.profilePicture
+    bio: user?.bio,
+    gender: user?.gender,
+    profilePicture: user?.profilePicture
   })
   const [loading, setLoading] = useState(false)
   const inputRef = useRef();

@@ -21,7 +21,6 @@ import { setSocket } from './redux/socketSlice.js';
 import { setOnlineUsers } from './redux/chatSlice.js';
 import { setLikeNotification } from './redux/realTimeNSlice.js'
 import ProtectedRoute from './components/ProtectedRoute'
-import { toast } from 'sonner'
 function App() {
   const {user} = useSelector((store) => store.auth);
   const dispatch = useDispatch();

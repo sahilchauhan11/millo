@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Comment from './Comment.jsx'
 import axios from 'axios'
 import { toast } from 'sonner'
-import { setPost,setSelectedPost } from '@/redux/postSlice.js'
+import { setPost } from '@/redux/postSlice.js'
 
 const CommentDialogue = ({ open, onOpenChange }) => {
   const [text, setText] = useState("");
@@ -54,7 +54,7 @@ const CommentDialogue = ({ open, onOpenChange }) => {
       
         toast.success(res.data.message);
       } else {
-        toast.error(res.data.message);
+     console.log(res.data.message);
       }
       setText("");
   }

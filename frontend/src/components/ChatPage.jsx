@@ -8,7 +8,6 @@ import { MessageCircleCode } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { setMessages, setOnlineUsers } from '../redux/chatSlice';
-
 const ChatPage = () => {
   const [textmessage, settextmessage] = useState('');
   const dispatch = useDispatch();
@@ -34,19 +33,13 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
-    if (socket) {
-      socket.on('getOnlineUsers', (onlineUsersList) => {
-        dispatch(setOnlineUsers(onlineUsersList));
-      });
-    }
+
 
     return () => {
-      if (socket) {
-        socket.off('getOnlineUsers');
-      }
+      
       dispatch(setSelectedUser(null));
     };
-  }, [socket]);
+  }, []);
 
   return (
     <div className='flex h-screen w-full bg-gray-100'>

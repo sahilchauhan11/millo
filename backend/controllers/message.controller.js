@@ -3,13 +3,13 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 import { getReceiverSocket ,io} from "../socket/socketIo.js";
-import mongoose from "mongoose";
+
 
 
 export async function sendMessage(req,res){
     try{
-        const senderId=mongoose.Types.ObjectId(req.id);
-        const receiverId=mongoose.Types.ObjectId(req.params.id);
+        const senderId = req.id;
+        const receiverId = req.params.id;
         const {message}=req.body;
         console.log(message)
   
@@ -37,11 +37,11 @@ export async function sendMessage(req,res){
         }
         const receiverSocket=getReceiverSocket(receiverId);
         if (receiverSocket){
-            console.log("sending message--->",message,"-to-",receiverSocket)
+          
             io.to(receiverSocket).emit('newMessage',newMessage);
         }
         
-           return res.status(200).json({message:newMessage,success:true,newMessage});
+           return res.status(201).json({message:newMessage,success:true,newMessage});
         
     }   
     catch(error){
@@ -53,7 +53,7 @@ export async function getMessage(req,res){
         const senderId=req.id;
         const receiverId=req.params.id;
        
-        let conversation=await Conversation.findOne({
+        const conversation=await Conversation.findOne({
             participants:{
                 $all:[senderId,receiverId]
             }

@@ -13,7 +13,7 @@ import path from 'path';
 dotenv.config();
 const port = process.env.PORT || 3000;
 const _dirname=path.resolve();
-mongoDbConnection();
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,7 +35,8 @@ app.get("*",(req,res)=>{
   res.sendFile(path.resolve(_dirname,"frontend","dist","index.html"))
 })
 server.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  mongoDbConnection();
+  console.log(`Server  listen at port->${port}`);
 });
 
 
